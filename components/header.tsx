@@ -70,7 +70,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             {/* Option for image logo */}
-            <div className="relative h-14 w-30">
+            <div className="relative h-14 w-30 sm:h-14 sm:w-30 md:h-14 md:w-30">
               <WebsiteImage
                 imageId="logo"
                 alt="Design Studio Logo"
