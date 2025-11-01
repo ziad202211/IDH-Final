@@ -50,14 +50,13 @@ export function getSupabaseClient() {
 // Server-side Supabase (for API routes, Next.js server actions)
 export function createServerSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-  if (!url || !key) {
+  if (!url || !serviceRoleKey) {
     throw new Error("Missing Supabase environment variables in server")
   }
 
-  return createClient(url, key)
+  return createClient(url, serviceRoleKey)
 }
 
 // Default export (safe universal client)
