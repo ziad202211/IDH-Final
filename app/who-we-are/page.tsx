@@ -32,12 +32,15 @@ export default function WhoWeArePage() {
     <main className="overflow-x-hidden">
       {/* Hero Section */}
       <SectionAnimation>
-        <section className="relative bg-white pt-24 pb-16 min-h-[810px]">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="pt-16">
-                <h1 className="text-4xl md:text-5xl font-semibold text-[#171A1F] mb-6">Who we are</h1>
-                <p className="text-[#424955] text-lg max-w-md">
+        <section className="relative bg-white pt-24 pb-16 min-h-[810px] md:min-h-[600px]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+              <div className="pt-8 md:pt-16 text-center lg:text-left">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#171A1F] mb-6">
+                  Who we are
+                </h1>
+                <p className="text-[#424955] text-base sm:text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
+
                   Iwan Design House is a premium architecture and interior 
                   design firm creating high-value, functional spaces for real 
                   estate developers, hospitality brands, and high-net-worth individuals.
@@ -46,12 +49,12 @@ export default function WhoWeArePage() {
 
                 </p>
               </div>
-              <div className="relative h-[490px]">
+              <div className="relative h-64 sm:h-80 md:h-[490px] w-full">
                 <WebsiteImage
                   imageId="about_hero"
                   alt="Interior design showcase"
                   fill
-                  className="object-cover"
+                  className="object-cover rounded-xl"
                   priority
                   fallbackSrc="/placeholder.svg?height=490&width=700"
                 />
@@ -103,8 +106,8 @@ export default function WhoWeArePage() {
       {/* Partners Section */}
       <SectionAnimation direction="left" delay={200}>
         <section className="bg-white py-16">
-          <div className="container mx-auto px-4 lg:px-8">
-            <h2 className="text-4xl font-semibold text-center text-[#171A1F] mb-12">
+                  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-center text-[#171A1F] mb-10 sm:mb-12">
               Our Trusted Partners
             </h2>
 
@@ -195,24 +198,27 @@ export default function WhoWeArePage() {
       </SectionAnimation>
 
       {/* Our Process Section */}
+       {/* Our Process Section */}
       <SectionAnimation direction="up" delay={400}>
         <section className="bg-[#171A1F] py-16 text-white">
-          <div className="container mx-auto px-4 lg:px-8">
-            <h2 className="text-4xl font-semibold text-center mb-12">Our Process</h2>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-center mb-10 sm:mb-12">
+              Our Process
+            </h2>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-              <div className="col-span-2 bg-[#1D2128] relative overflow-hidden">
-                <div className="p-12 pr-[305px] relative z-10 min-h-[290px]">
-                  <div className="text-[#636AE8] text-[200px] font-semibold absolute top-0 left-6 opacity-15 leading-none">
+            <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6 mb-6">
+              <div className="col-span-2 bg-[#1D2128] relative rounded-xl overflow-hidden">
+                <div className="p-6 sm:p-10 pr-0 lg:pr-[305px] relative z-10 min-h-[260px] sm:min-h-[290px]">
+                  <div className="text-[#636AE8] text-[140px] sm:text-[200px] font-semibold absolute top-0 left-4 opacity-15 leading-none">
                     1
                   </div>
-                  <h3 className="text-2xl font-semibold mb-4">Preconstruction Design</h3>
-                  <p>
+                  <h3 className="text-xl sm:text-2xl font-semibold mb-4">Preconstruction Design</h3>
+                  <p className="text-sm sm:text-base leading-relaxed">
                     Officia elit ipsum ad velit exercitation do est nisi elit. Exercitation reprehenderit cupidatat
                     fugiat voluptate mollit mollit fugiat consequa
                   </p>
                 </div>
-                <div className="absolute right-0 top-0 bottom-0 w-[305px]">
+                <div className="absolute right-0 top-0 bottom-0 w-[200px] sm:w-[305px] hidden md:block">
                   <WebsiteImage
                     imageId="process1"
                     alt="Preconstruction Design"
@@ -222,41 +228,41 @@ export default function WhoWeArePage() {
                   />
                 </div>
               </div>
-              <div className="bg-[#171A1F] p-12 relative overflow-hidden min-h-[290px]">
-                <div className="text-[#636AE8] text-[200px] font-semibold absolute top-0 left-6 opacity-15 leading-none">
+              <div className="bg-[#171A1F] p-6 sm:p-10 rounded-xl">
+                <div className="text-[#636AE8] text-[140px] sm:text-[200px] font-semibold absolute opacity-15 leading-none">
                   2
                 </div>
-                <h3 className="text-2xl font-semibold mb-4">Design & Construction Estimate</h3>
-                <p>
+                <h3 className="text-xl sm:text-2xl font-semibold mb-4">Design & Construction Estimate</h3>
+                <p className="text-sm sm:text-base leading-relaxed">
                   Qui nisi sint excepteur irure incididunt nostrud consectetur ad voluptate eiusmod esse voluptate id ut
                   commodo in reprehen
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-              <div className="bg-[#171A1F] p-12 relative overflow-hidden min-h-[290px]">
-                <div className="text-[#636AE8] text-[200px] font-semibold absolute top-0 left-6 opacity-15 leading-none">
+            <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6 mb-12">
+              <div className="bg-[#171A1F] p-6 sm:p-10 rounded-xl">
+                <div className="text-[#636AE8] text-[140px] sm:text-[200px] font-semibold absolute opacity-15 leading-none">
                   3
                 </div>
-                <h3 className="text-2xl font-semibold mb-4">On-Site Consultations</h3>
-                <p>
+                <h3 className="text-xl sm:text-2xl font-semibold mb-4">On-Site Consultations</h3>
+                <p className="text-sm sm:text-base leading-relaxed">
                   Proident duis adipisicing duis irure occaecat est nisi cupidatat anim duis proident ut enim nulla
                   veniam ea sunt dolore
                 </p>
               </div>
-              <div className="col-span-2 bg-[#1D2128] relative overflow-hidden">
-                <div className="p-12 pr-[305px] relative z-10 min-h-[290px]">
-                  <div className="text-[#636AE8] text-[200px] font-semibold absolute top-0 left-6 opacity-15 leading-none">
+              <div className="col-span-2 bg-[#1D2128] relative rounded-xl overflow-hidden">
+                <div className="p-6 sm:p-10 pr-0 lg:pr-[305px] relative z-10 min-h-[260px] sm:min-h-[290px]">
+                  <div className="text-[#636AE8] text-[140px] sm:text-[200px] font-semibold absolute top-0 left-4 opacity-15 leading-none">
                     4
                   </div>
-                  <h3 className="text-2xl font-semibold mb-4">The Finishing Touches</h3>
-                  <p>
+                  <h3 className="text-xl sm:text-2xl font-semibold mb-4">The Finishing Touches</h3>
+                  <p className="text-sm sm:text-base leading-relaxed">
                     Ut ut aliqua mollit amet cupidatat minim cillum fugiat cillum quis ullamco sint culpa ullamco
                     commodo amet. Nostrud enim pariatur et ad
                   </p>
                 </div>
-                <div className="absolute right-0 top-0 bottom-0 w-[305px]">
+                <div className="absolute right-0 top-0 bottom-0 w-[200px] sm:w-[305px] hidden md:block">
                   <WebsiteImage
                     imageId="process2"
                     alt="Finishing Touches"
@@ -274,6 +280,7 @@ export default function WhoWeArePage() {
           </div>
         </section>
       </SectionAnimation>
+
 
       {/* Recent Projects Section */}
       <SectionAnimation direction="left" delay={500}>
@@ -325,4 +332,4 @@ export default function WhoWeArePage() {
       </SectionAnimation>
     </main>
   )
-}
+} 

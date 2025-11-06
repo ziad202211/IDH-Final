@@ -27,7 +27,11 @@ export default function Home() {
         return
       }
 
-      const { data, error } = await supabase.from("projects").select("*").eq("featured", true).limit(6)
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .eq("featured", true)
+        .limit(6)
 
       if (error) {
         console.error("Error fetching featured projects:", error)
@@ -43,7 +47,6 @@ export default function Home() {
     }
   }
 
-  // Sample projects as fallback
   const getSampleProjects = (): Project[] => [
     {
       id: "1",
@@ -105,31 +108,30 @@ export default function Home() {
     <main className="overflow-x-hidden">
       {/* Hero Section */}
       <SectionAnimation>
-        <section className="relative bg-white min-h-[810px]">
-          <div className="container mx-auto px-4 lg:px-8">
-            {/* Hero Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-20 pb-10">
-              <div className="flex flex-col justify-center space-y-6">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#171A1F]">
+        <section className="relative bg-white min-h-[700px] md:min-h-[810px]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-20 pb-10 items-center">
+              <div className="flex flex-col justify-center space-y-6 text-center lg:text-left">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal text-[#171A1F] leading-tight">
                   Find your
                   <span className="block font-bold">dream space</span>
                 </h1>
-                <p className="text-[#424955] text-lg max-w-md">
+                <p className="text-[#424955] text-base sm:text-lg max-w-md mx-auto lg:mx-0">
                   We are an innovative interior design and construction company dedicated to transforming spaces into
                   stunning works of art.
                 </p>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
                   <Link href="/contact">
-                    <Button className="btn-primary px-8 py-6">Let&apos;s chat</Button>
+                    <Button className="btn-primary w-full sm:w-auto px-8 py-6">Let&apos;s chat</Button>
                   </Link>
                   <Link href="/projects">
-                    <Button variant="outline" className="px-8 py-6">
+                    <Button variant="outline" className="w-full sm:w-auto px-8 py-6">
                       View our work
                     </Button>
                   </Link>
                 </div>
               </div>
-              <div className="relative h-[490px]">
+              <div className="relative h-[300px] sm:h-[400px] lg:h-[490px] w-full">
                 <WebsiteImage
                   imageId="hero"
                   alt="Interior design showcase"
@@ -138,8 +140,11 @@ export default function Home() {
                   priority
                   fallbackSrc="/placeholder.svg?height=490&width=700"
                 />
-                <div className="absolute right-4 bottom-4 md:right-8 md:bottom-8">
-                  <Button size="icon" className="rounded-full bg-[#171A1F] hover:bg-[#2A2D35] h-12 w-12">
+                <div className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6">
+                  <Button
+                    size="icon"
+                    className="rounded-full bg-[#171A1F] hover:bg-[#2A2D35] h-12 w-12 sm:h-14 sm:w-14"
+                  >
                     <Play className="h-6 w-6 text-white" />
                   </Button>
                 </div>
@@ -152,10 +157,10 @@ export default function Home() {
       {/* What We Do Section */}
       <SectionAnimation direction="right" delay={200}>
         <section className="bg-white py-16">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <h2 className="text-4xl font-semibold text-[#171A1F]">What we do</h2>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="space-y-6 text-center lg:text-left">
+                <h2 className="text-3xl sm:text-4xl font-semibold text-[#171A1F]">What we do</h2>
                 <div className="border border-[#dee1e6] rounded-md overflow-hidden">
                   {[
                     "Architecture Design",
@@ -165,15 +170,15 @@ export default function Home() {
                     "Project Management ",
                   ].map((service, index) => (
                     <div key={index} className="border-b border-[#dee1e6] last:border-b-0">
-                      <div className="p-4">
-                        <h3 className="text-xl md:text-2xl text-[#171A1F]">{service}</h3>
+                      <div className="p-4 sm:p-6">
+                        <h3 className="text-lg sm:text-xl md:text-2xl text-[#171A1F]">{service}</h3>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="relative h-[530px]">
+                <div className="relative h-[250px] sm:h-[400px] lg:h-[530px]">
                   <WebsiteImage
                     imageId="about1"
                     alt="Interior design showcase 1"
@@ -182,7 +187,7 @@ export default function Home() {
                     fallbackSrc="/placeholder.svg?height=530&width=318"
                   />
                 </div>
-                <div className="relative h-[530px]">
+                <div className="relative h-[250px] sm:h-[400px] lg:h-[530px]">
                   <WebsiteImage
                     imageId="about2"
                     alt="Interior design showcase 2"
@@ -200,9 +205,9 @@ export default function Home() {
       {/* About Us Section */}
       <SectionAnimation direction="left" delay={300}>
         <section className="bg-[#171A1F] py-16">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="relative h-[490px]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="relative h-[300px] sm:h-[400px] lg:h-[490px]">
                 <WebsiteImage
                   imageId="about_hero"
                   alt="About us"
@@ -211,36 +216,30 @@ export default function Home() {
                   fallbackSrc="/placeholder.svg?height=490&width=817"
                 />
               </div>
-              <div className="text-white space-y-8">
-                <h2 className="text-4xl font-semibold">About us</h2>
-                <p className="text-base md:text-lg">
+              <div className="text-white space-y-6 sm:space-y-8 text-center lg:text-left">
+                <h2 className="text-3xl sm:text-4xl font-semibold">About us</h2>
+                <p className="text-sm sm:text-base md:text-lg max-w-xl mx-auto lg:mx-0">
                   Work without benefit in non-exceptional areas, with carelessness and oversight. A desire for pain
                   results from wrongdoing, neglect, and focus.
                 </p>
-                <div className="border-t border-white pt-4 ">
-                  <h3 className="text-xl font-semibold mb-4">Why Choose Us</h3>
+                <div className="border-t border-white pt-4 sm:pt-6">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-4">Why Choose Us</h3>
                   <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <div className="h-4 w-4 rounded-full bg-white mt-1 mr-3"></div>
-                      <span>Preferential Price</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-4 w-4 rounded-full bg-white mt-1 mr-3"></div>
-                      <span>After Care</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-4 w-4 rounded-full bg-white mt-1 mr-3"></div>
-                      <span>We convey the unique appeal and color plan</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="h-4 w-4 rounded-full bg-white mt-1 mr-3"></div>
-                      <span>We provide the most effective exclusive solutions</span>
-                    </li>
+                    {[
+                      "Preferential Price",
+                      "After Care",
+                      "We convey the unique appeal and color plan",
+                      "We provide the most effective exclusive solutions",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start justify-center lg:justify-start">
+                        <div className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-white mt-1 mr-3"></div>
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
-                <br />
-                <Link href="/who-we-are" >
-                  <Button className="btn-secondary">View more</Button>
+                <Link href="/who-we-are">
+                  <Button className="btn-secondary w-full sm:w-auto">View more</Button>
                 </Link>
               </div>
             </div>
@@ -248,7 +247,7 @@ export default function Home() {
         </section>
       </SectionAnimation>
 
-      {/* Recent Projects Section */}
+            {/* Recent Projects Section */}
       <SectionAnimation direction="left" delay={500}>
         <section className="bg-white py-16">
           <div className="container mx-auto px-4 lg:px-8">
@@ -396,6 +395,7 @@ export default function Home() {
           </div>
         </section>
       </SectionAnimation>
+
     </main>
   )
 }

@@ -5,7 +5,14 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
@@ -37,17 +44,12 @@ export default function ContactPage() {
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       })
 
       const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit form")
-      }
+      if (!response.ok) throw new Error(data.error || "Failed to submit form")
 
       toast({
         title: "Message sent!",
@@ -67,17 +69,27 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto py-12">
-      <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-          <p className="mb-6">
-            We'd love to hear from you. Fill out the form and we'll get back to you as soon as possible.
-          </p>
-          <div className="space-y-4">
-            <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center md:text-left">
+        Contact Us
+      </h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        {/* Contact info section */}
+        <div className="flex flex-col justify-center space-y-6">
+          <div>
+            <h2 className="text-2xl font-semibold mb-3 text-center md:text-left">
+              Get in Touch
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground text-center md:text-left mb-6">
+              We'd love to hear from you. Fill out the form and we'll get back to you as soon as possible.
+            </p>
+          </div>
+
+          <div className="space-y-5">
+            {/* Phone */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 text-center sm:text-left">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2 sm:mb-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-primary"
@@ -95,11 +107,13 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-medium">Phone</h3>
-                <p className="text-muted-foreground">(+20 ) 1554800040</p>
+                <p className="text-muted-foreground">(+20) 1554800040</p>
               </div>
             </div>
-            <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+
+            {/* Email */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 text-center sm:text-left">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2 sm:mb-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-primary"
@@ -117,11 +131,15 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-medium">Email</h3>
-                <p className="text-muted-foreground">info@iwandesignhouse.com</p>
+                <p className="text-muted-foreground break-all">
+                  info@iwandesignhouse.com
+                </p>
               </div>
             </div>
-            <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+
+            {/* Address */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 text-center sm:text-left">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2 sm:mb-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-primary"
@@ -145,14 +163,21 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-medium">Address</h3>
-                <p className="text-muted-foreground">111 -90th Street - 5th Settlement-New Cairo</p>
+                <p className="text-muted-foreground">
+                  111 - 90th Street - 5th Settlement - New Cairo
+                </p>
               </div>
             </div>
           </div>
         </div>
-        <div>
+
+        {/* Contact form */}
+        <div className="w-full">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-6 w-full"
+            >
               <FormField
                 control={form.control}
                 name="name"
@@ -160,7 +185,7 @@ export default function ContactPage() {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your name" {...field} />
+                      <Input placeholder="Your name" {...field} className="w-full" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -173,7 +198,7 @@ export default function ContactPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your email" type="email" {...field} />
+                      <Input placeholder="Your email" type="email" {...field} className="w-full" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -186,7 +211,7 @@ export default function ContactPage() {
                   <FormItem>
                     <FormLabel>Phone (optional)</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your phone number" {...field} />
+                      <Input placeholder="Your phone number" {...field} className="w-full" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -199,13 +224,21 @@ export default function ContactPage() {
                   <FormItem>
                     <FormLabel>Message</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Your message" className="min-h-[120px]" {...field} />
+                      <Textarea
+                        placeholder="Your message"
+                        className="min-h-[120px] w-full"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
