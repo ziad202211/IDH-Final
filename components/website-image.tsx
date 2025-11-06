@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import type { ImageMapping } from "@/lib/image-mapping"
 import { useImages } from "@/context/image-context"
 
 interface WebsiteImageProps {
@@ -31,7 +30,6 @@ export function WebsiteImage({
     fallbackSrc || `/placeholder.svg?height=${height || 300}&width=${width || 300}`,
   )
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
   useEffect(() => {
     try {
@@ -39,27 +37,24 @@ export function WebsiteImage({
       const mappedUrl = images[imageId]
       if (mappedUrl) {
         setImageSrc(mappedUrl)
-        setError(false)
       } else if (fallbackSrc) {
         setImageSrc(fallbackSrc)
       }
-    } catch (e) {
-      setError(true)
     } finally {
       setLoading(false)
     }
   }, [images, imageId, fallbackSrc])
 
-  // If we're using fill, don't pass width and height
   if (fill) {
     return (
-      <div className={`relative ${className}`} style={{ width: "100%", height: "100%" }}>
+      <div className={`relative w-full h-full overflow-hidden`}>
         <img
           src={imageSrc || "/placeholder.svg"}
           alt={alt}
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
           decoding="async"
-          className={`object-cover w-full h-full ${loading ? "animate-pulse" : ""}`}
+          className={`w-full h-full ${className} ${loading ? "animate-pulse" : ""}`}
+          style={{ objectFit: className.includes("object-") ? undefined : "contain" }}
         />
       </div>
     )
@@ -71,9 +66,10 @@ export function WebsiteImage({
       alt={alt}
       width={width || 300}
       height={height || 300}
-      loading="lazy"
+      loading={priority ? "eager" : "lazy"}
       decoding="async"
       className={`${className} ${loading ? "animate-pulse" : ""}`}
+      style={{ objectFit: className.includes("object-") ? undefined : "contain" }}
     />
   )
 }

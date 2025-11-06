@@ -69,20 +69,17 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            {/* Option for image logo */}
-            <div className="relative h-14 w-32 sm:h-14 sm:w-32 md:h-14 md:w-32">
-              <WebsiteImage
-                imageId="logo"
-                alt="Design Studio Logo"
-                fill
-                className="object-contain"
-                fallbackSrc="/placeholder.svg?height=64&width=192"
-                priority
-              />
-            </div>
-            {/* Text logo fallback */}
-            {/* <span className="text-xl font-bold text-[#171A1F]">DESIGN STUDIO</span> */}
-          </Link>
+  <div className="relative h-14 w-32 sm:h-14 sm:w-32 md:h-14 md:w-32 flex items-center justify-center overflow-hidden">
+    <WebsiteImage
+      imageId="logo"
+      alt="Design Studio Logo"
+      fill
+      className="object-contain !w-full !h-full"
+      fallbackSrc="/placeholder.svg?height=64&width=192"
+      priority
+    />
+  </div>
+</Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
