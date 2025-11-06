@@ -77,6 +77,7 @@ export default function Header() {
                 fill
                 className="object-contain"
                 fallbackSrc="/placeholder.svg?height=64&width=192"
+                priority
               />
             </div>
             {/* Text logo fallback */}

@@ -29,14 +29,7 @@ function CrossfadeImage({ src, alt }: { src: string; alt: string }) {
 
   return (
     <>
-      {prevSrc && (
-        <Image
-          src={prevSrc}
-          alt={alt}
-          fill
-          className="object-cover"
-        />
-      )}
+      {prevSrc && <Image src={prevSrc} alt={alt} fill className="object-cover" />}
       <Image
         src={currentSrc}
         alt={alt}
@@ -54,7 +47,6 @@ export default function Projects() {
   const [activeCategory, setActiveCategory] = useState("All")
   const [featuredIndex, setFeaturedIndex] = useState(0)
   const [projectIndexById, setProjectIndexById] = useState<Record<string, number>>({})
-
   const categories = ["All", "House", "Malls", "Hotels", "Offices", "Residential", "Other"]
 
   const router = useRouter()
@@ -99,7 +91,6 @@ export default function Projects() {
     const normalized = category.trim()
     setActiveCategory(normalized)
     setLoading(true)
-
     try {
       let data: Project[]
       if (normalized === "All") {
@@ -107,7 +98,6 @@ export default function Projects() {
       } else {
         data = await getProjectsByCategory(normalized)
       }
-
       setProjects(data)
       const initial: Record<string, number> = {}
       for (const p of data) initial[p.id] = 0
@@ -133,21 +123,21 @@ export default function Projects() {
   }
 
   return (
-    <main className="overflow-x-hidden pt-16">
-      <div className="container mx-auto px-4 lg:px-8 py-16">
+    <main className="overflow-x-hidden pt-12 sm:pt-16">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-8 py-10 sm:py-16">
         <SectionAnimation>
-          <h1 className="text-4xl md:text-5xl font-semibold text-center text-[#171A1F] mt-8 mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-center text-[#171A1F] mt-6 sm:mt-8 mb-8 sm:mb-12">
             Our Projects
           </h1>
         </SectionAnimation>
 
         {/* Filter Buttons */}
         <SectionAnimation direction="up" delay={100}>
-          <div className="flex flex-wrap justify-center mb-16 border border-white overflow-hidden">
+          <div className="flex flex-wrap justify-center mb-10 sm:mb-16 border border-white overflow-hidden rounded-md">
             {categories.map((category) => (
               <button
                 key={category}
-                className={`px-6 py-3 ${
+                className={`px-3 sm:px-6 py-2 sm:py-3 text-sm sm:text-base ${
                   activeCategory === category
                     ? "bg-[#323842] text-white"
                     : "text-[#323842] hover:bg-gray-100 border-l border-[#dee1e6]"
@@ -162,32 +152,33 @@ export default function Projects() {
 
         {loading ? (
           <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#636AE8]"></div>
+            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#636AE8]"></div>
           </div>
         ) : projects.length === 0 ? (
           <div className="text-center py-20">
-            <h3 className="text-xl font-medium text-gray-700">No projects found</h3>
-            <p className="text-gray-500 mt-2">Try selecting a different category</p>
+            <h3 className="text-lg sm:text-xl font-medium text-gray-700">No projects found</h3>
+            <p className="text-gray-500 mt-2 text-sm sm:text-base">Try selecting a different category</p>
           </div>
         ) : (
           <>
             {/* Featured Project */}
             {projects.filter((p) => p.featured).length > 0 && (
               <SectionAnimation direction="left" delay={200}>
-                <section className="mb-24">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <h2 className="text-2xl md:text-3xl font-semibold text-[#171A1F]">Featured Project</h2>
-                      <p className="text-[#424955]">
+                <section className="mb-16 sm:mb-24">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
+                    <div className="space-y-3 sm:space-y-4 px-2 sm:px-0 text-center lg:text-left">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-[#171A1F]">
+                        Featured Project
+                      </h2>
+                      <p className="text-[#424955] text-sm sm:text-base">
                         {projects.find((p) => p.featured)?.description ||
                           "Our featured project showcases our best work."}
                       </p>
                     </div>
-                    <div className="flex justify-end"></div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8 relative">
-                    <div className="lg:col-span-2 relative h-[526px]">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 mt-6 sm:mt-8 relative">
+                    <div className="lg:col-span-2 relative h-[200px] sm:h-[400px] md:h-[526px]">
                       {(() => {
                         const featured = projects.find((p) => p.featured)
                         const images = featured?.images || []
@@ -202,12 +193,12 @@ export default function Projects() {
                           const len = featured?.images?.length || 0
                           if (len > 0) setFeaturedIndex((i) => (i - 1 + len) % len)
                         }}
-                        className="absolute left-6 top-1/2 -translate-y-1/2 bg-[#cfd2da] hover:bg-[#bbbfc8] rounded-full h-12 w-12"
+                        className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 bg-[#cfd2da] hover:bg-[#bbbfc8] rounded-full h-8 w-8 sm:h-12 sm:w-12"
                       >
-                        <ChevronLeft className="h-6 w-6" />
+                        <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
                       </Button>
                     </div>
-                    <div className="relative h-[526px]">
+                    <div className="relative h-[200px] sm:h-[400px] md:h-[526px]">
                       {(() => {
                         const featured = projects.find((p) => p.featured)
                         const images = featured?.images || []
@@ -223,9 +214,9 @@ export default function Projects() {
                           const len = featured?.images?.length || 0
                           if (len > 0) setFeaturedIndex((i) => (i + 1) % len)
                         }}
-                        className="absolute right-6 top-1/2 -translate-y-1/2 bg-[#171A1F] hover:bg-[#2A2D35] rounded-full h-12 w-12"
+                        className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 bg-[#171A1F] hover:bg-[#2A2D35] rounded-full h-8 w-8 sm:h-12 sm:w-12"
                       >
-                        <ChevronRight className="h-6 w-6 text-white" />
+                        <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
                       </Button>
                     </div>
                   </div>
@@ -240,21 +231,26 @@ export default function Projects() {
                 direction={index % 2 === 0 ? "right" : "left"}
                 delay={300 + index * 100}
               >
-                <section className="mb-24">
-                  <div className="flex flex-wrap justify-between items-center mb-8">
+                <section className="mb-16 sm:mb-24">
+                  <div className="flex flex-wrap justify-between items-center mb-6 sm:mb-8 px-2 sm:px-0">
                     <div>
-                      <h2 className="text-xl md:text-2xl font-semibold text-[#171A1F]">{project.title}</h2>
-                      <p className="text-[#171A1F] text-sm">{project.category}</p>
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#171A1F]">
+                        {project.title}
+                      </h2>
+                      <p className="text-[#171A1F] text-xs sm:text-sm">{project.category}</p>
                     </div>
                     <Link href={`/projects/${project.id}`}>
-                      <Button variant="outline" className="border-[#171A1F] text-[#171A1F]">
+                      <Button variant="outline" className="border-[#171A1F] text-[#171A1F] text-sm sm:text-base">
                         View more
                       </Button>
                     </Link>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative">
-                    <div className={`${index % 2 === 0 ? "lg:col-span-2" : ""} relative h-[526px]`}>
+                  {/* ✅ Changed grid for mobile: 2 columns */}
+                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 relative">
+                    <div
+                      className={`${index % 2 === 0 ? "lg:col-span-2" : ""} relative h-[180px] sm:h-[400px] md:h-[526px]`}
+                    >
                       {(() => {
                         const len = project.images?.length || 0
                         const idx = projectIndexById[project.id] ? projectIndexById[project.id] % len : 0
@@ -272,12 +268,14 @@ export default function Projects() {
                             }))
                           }
                         }}
-                        className="absolute left-6 top-1/2 -translate-y-1/2 bg-[#171A1F] hover:bg-[#2A2D35] rounded-full h-12 w-12"
+                        className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 bg-[#171A1F] hover:bg-[#2A2D35] rounded-full h-7 w-7 sm:h-12 sm:w-12"
                       >
-                        <ChevronLeft className="h-6 w-6 text-white" />
+                        <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
                       </Button>
                     </div>
-                    <div className={`${index % 2 !== 0 ? "lg:col-span-2" : ""} relative h-[526px]`}>
+                    <div
+                      className={`${index % 2 !== 0 ? "lg:col-span-2" : ""} relative h-[180px] sm:h-[400px] md:h-[526px]`}
+                    >
                       {(() => {
                         const len = project.images?.length || 0
                         const base = projectIndexById[project.id] || 0
@@ -296,9 +294,9 @@ export default function Projects() {
                             }))
                           }
                         }}
-                        className="absolute right-6 top-1/2 -translate-y-1/2 bg-[#171A1F] hover:bg-[#2A2D35] rounded-full h-12 w-12"
+                        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 bg-[#171A1F] hover:bg-[#2A2D35] rounded-full h-7 w-7 sm:h-12 sm:w-12"
                       >
-                        <ChevronRight className="h-6 w-6 text-white" />
+                        <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
                       </Button>
                     </div>
                   </div>
@@ -310,8 +308,10 @@ export default function Projects() {
 
         {/* Load More Button */}
         <SectionAnimation direction="up" delay={600}>
-          <div className="flex justify-center mt-16 mb-8">
-            <Button className="btn-primary">Load more</Button>
+          <div className="flex justify-center mt-12 sm:mt-16 mb-6 sm:mb-8">
+            <Button className="btn-primary text-sm sm:text-base px-5 sm:px-8 py-2 sm:py-3">
+              Load more
+            </Button>
           </div>
         </SectionAnimation>
       </div>
