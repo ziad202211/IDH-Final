@@ -18,8 +18,8 @@ const archivo = Archivo({
 })
 
 export const metadata = {
-  title: "Interior Design Studio",
-  description: "Transform your space with our innovative interior design solutions",
+  title: "Architecture Design Studio",
+  description: "Transform your space with our innovative Architecture design solutions",
   generator: "v0.dev",
 }
 
