@@ -105,7 +105,7 @@ export default function Home() {
   ]
 
   return (
-    <main className="overflow-x-hidden">
+    <main className="min-h-screen">
       {/* Hero Section */}
       <SectionAnimation>
         <section className="relative bg-white min-h-[700px] md:min-h-[810px]">
