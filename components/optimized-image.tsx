@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useImages } from "@/context/image-context"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 interface OptimizedImageProps {
   imageId: string
@@ -14,8 +15,7 @@ interface OptimizedImageProps {
   fallbackSrc?: string
   fill?: boolean
   quality?: number
-  placeholder?: 'blur' | 'empty' | 'color'
-  blurDataURL?: string
+  sizes?: string
 }
 
 export function OptimizedImage({
@@ -28,86 +28,65 @@ export function OptimizedImage({
   fallbackSrc,
   fill = false,
   quality = 75,
-  placeholder = 'empty',
-  blurDataURL,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
 }: OptimizedImageProps) {
   const { images } = useImages()
-  const [isLoading, setIsLoading] = useState(true)
-  const [currentSrc, setCurrentSrc] = useState(blurDataURL || fallbackSrc || '')
   const [optimizedSrc, setOptimizedSrc] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   // Get the optimized image URL from the images context
   useEffect(() => {
     if (images[imageId]) {
       const url = new URL(images[imageId])
       
-      // Add quality parameter if it's a Supabase URL and not already set
+      // Add optimization parameters for Supabase
       if (url.hostname.includes('supabase.co') || url.hostname.includes('supabase.in')) {
         url.searchParams.set('quality', quality.toString())
-        // Add other optimization parameters if needed
         url.searchParams.set('format', 'webp')
+        // Add width for better resizing
+        if (width) {
+          url.searchParams.set('width', width.toString())
+        }
       }
       
       setOptimizedSrc(url.toString())
     } else if (fallbackSrc) {
-      setCurrentSrc(fallbackSrc)
-      setIsLoading(false)
+      setOptimizedSrc(fallbackSrc)
     }
-  }, [images, imageId, fallbackSrc, quality])
-
-  // Handle image load
-  const handleLoad = () => {
     setIsLoading(false)
-  }
+  }, [images, imageId, fallbackSrc, quality, width])
 
-  // Preload the optimized image
-  useEffect(() => {
-    if (!optimizedSrc || optimizedSrc === currentSrc) return
-    
-    const img = new window.Image()
-    img.src = optimizedSrc
-    img.onload = () => {
-      setCurrentSrc(optimizedSrc)
-    }
-    img.onerror = () => {
-      console.error(`Failed to load optimized image: ${optimizedSrc}`)
-      setIsLoading(false)
-    }
-    
-    return () => {
-      img.onload = null
-      img.onerror = null
-    }
-  }, [optimizedSrc])
+  if (!optimizedSrc) return null
 
-  if (!currentSrc) return null
-
-  const imageProps: React.ImgHTMLAttributes<HTMLImageElement> = {
-    src: currentSrc,
+  const imageProps = {
+    src: optimizedSrc,
     alt,
     width,
     height,
-    loading: priority ? 'eager' : 'lazy',
-    decoding: 'async' as const,
+    priority,
+    quality,
+    sizes,
     className: cn(
       'transition-opacity duration-300',
       isLoading ? 'opacity-30' : 'opacity-100',
-      fill ? 'w-full h-full' : '',
       className
     ),
-    style: {
-      objectFit: className.includes("object-") ? undefined : "contain"
-    } as React.CSSProperties,
-    onLoad: handleLoad,
+    onLoadingComplete: () => setIsLoading(false),
   }
 
   if (fill) {
     return (
       <div className={cn("relative w-full h-full overflow-hidden", className)}>
-        <img {...imageProps} />
+        <Image
+          {...imageProps}
+          fill
+          style={{
+            objectFit: className.includes("object-") ? undefined : "contain"
+          }}
+        />
       </div>
     )
   }
 
-  return <img {...imageProps} />
+  return <Image {...imageProps} />
 }

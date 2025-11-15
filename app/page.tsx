@@ -112,7 +112,7 @@ export default function Home() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-20 pb-10 items-center">
               <div className="flex flex-col justify-center space-y-6 text-center lg:text-left">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal text-[#171A1F] leading-tight mt-16 sm:mt-0">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal text-[#171A1F] leading-tight mt-12 sm:mt-0">
                   Find your
                   <span className="block font-bold">dream space</span>
                 </h1>
