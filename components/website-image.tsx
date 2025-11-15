@@ -25,35 +25,28 @@ export function WebsiteImage({
   fill = false,
 }: WebsiteImageProps) {
   const { images } = useImages()
-
-  const [imageSrc, setImageSrc] = useState<string>(
-    fallbackSrc || `/placeholder.svg?height=${height || 300}&width=${width || 300}`,
-  )
-  const [loading, setLoading] = useState(true)
+  const [imageSrc, setImageSrc] = useState<string>(fallbackSrc || '')
 
   useEffect(() => {
-    try {
-      setLoading(true)
-      const mappedUrl = images[imageId]
-      if (mappedUrl) {
-        setImageSrc(mappedUrl)
-      } else if (fallbackSrc) {
-        setImageSrc(fallbackSrc)
-      }
-    } finally {
-      setLoading(false)
+    const mappedUrl = images[imageId]
+    if (mappedUrl) {
+      setImageSrc(mappedUrl)
+    } else if (fallbackSrc) {
+      setImageSrc(fallbackSrc)
     }
   }, [images, imageId, fallbackSrc])
+
+  if (!imageSrc) return null
 
   if (fill) {
     return (
       <div className={`relative w-full h-full overflow-hidden`}>
         <img
-          src={imageSrc || "/placeholder.svg"}
+          src={imageSrc}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
-          className={`w-full h-full ${className} ${loading ? "animate-pulse" : ""}`}
+          className={`w-full h-full ${className}`}
           style={{ objectFit: className.includes("object-") ? undefined : "contain" }}
         />
       </div>
@@ -62,13 +55,13 @@ export function WebsiteImage({
 
   return (
     <img
-      src={imageSrc || "/placeholder.svg"}
+      src={imageSrc}
       alt={alt}
-      width={width || 300}
-      height={height || 300}
+      width={width}
+      height={height}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
-      className={`${className} ${loading ? "animate-pulse" : ""}`}
+      className={className}
       style={{ objectFit: className.includes("object-") ? undefined : "contain" }}
     />
   )
