@@ -103,7 +103,7 @@ export default function Header() {
             ))}
 
             {/* Admin Dropdown */}
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="text-sm text-[#6E7787] hover:text-[#171A1F] transition-colors flex items-center gap-1">
                   Admin <ChevronDown className="h-4 w-4" />
@@ -123,7 +123,7 @@ export default function Header() {
                   <Link href="/admin/dashboard/messages">Messages</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
           </nav>
 
           {/* Contact Button */}
