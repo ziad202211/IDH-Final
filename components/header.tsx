@@ -186,7 +186,7 @@ export default function Header() {
             ))}
 
             {/* Admin Links for Mobile */}
-            <div className="py-2 text-[#6E7787]">
+            {/* <div className="py-2 text-[#6E7787]">
               <p className="font-medium mb-2">Admin</p>
               <div className="pl-4 flex flex-col space-y-2">
                 <Link href="/admin/login" className="text-[#6E7787] hover:text-[#171A1F]">
@@ -202,7 +202,7 @@ export default function Header() {
                   Messages
                 </Link>
               </div>
-            </div>
+            </div> */}
 
             <Link href="/contact">
               <Button className="bg-[#171A1F] hover:bg-[#2A2D35] text-white w-full mt-2 rounded-full">
