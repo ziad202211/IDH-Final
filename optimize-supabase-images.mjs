@@ -9,8 +9,8 @@ dotenv.config({ path: '.env.local' });
 // --- Configuration ---
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const sourceBucket = 'images'; // The bucket with your original 4K images
-const destinationBucket = 'optimized-images'; // A new bucket for optimized images
+const sourceBucket = 'media'; // The bucket with your original images under the website/ folder
+const destinationBucket = 'optimized-images'; // A bucket for optimized images
 const maxImageWidth = 1920; // Max width for resizing
 const quality = 80; // Quality setting for WebP
 
@@ -42,13 +42,37 @@ class SupabaseStorage {
     this.client = createClient(supabaseUrl, supabaseServiceKey);
   }
 
-  async listFiles(bucket) {
-    const { data, error } = await this.client.storage.from(bucket).list();
-    if (error) {
-      console.error(`Error listing files in bucket "${bucket}":`, error);
-      throw error;
-    }
-    return data.map(file => file.name);
+  async listFiles(bucket, prefix = 'website/') {
+    const allFiles = [];
+
+    const walk = async (currentPrefix) => {
+      const { data, error } = await this.client.storage.from(bucket).list(currentPrefix, {
+        limit: 1000,
+        sortBy: { column: 'name', order: 'asc' },
+      });
+
+      if (error) {
+        console.error(`Error listing files in bucket "${bucket}" with prefix "${currentPrefix}":`, error);
+        throw error;
+      }
+
+      if (!data) return;
+
+      for (const item of data) {
+        const isFolder = !item.name.includes('.');
+
+        if (isFolder) {
+          await walk(`${currentPrefix}${item.name}/`);
+        } else {
+          const fullPath = `${currentPrefix}${item.name}`;
+          allFiles.push(fullPath);
+        }
+      }
+    };
+
+    await walk(prefix);
+
+    return allFiles;
   }
 
   async downloadFile(bucket, fileName) {
@@ -62,9 +86,11 @@ class SupabaseStorage {
   }
 
   async uploadFile(bucket, fileName, fileBuffer) {
-    // Change the extension to .webp
-    const newFileName = `${path.parse(fileName).name}.webp`;
-    
+    // Preserve folder structure and change the extension to .webp
+    const parsed = path.posix.parse(fileName);
+    const baseName = `${parsed.name}.webp`;
+    const newFileName = parsed.dir ? `${parsed.dir}/${baseName}` : baseName;
+
     const { error } = await this.client.storage
       .from(bucket)
       .upload(newFileName, fileBuffer, {
@@ -97,9 +123,13 @@ async function run() {
       if (createError) throw createError;
     }
 
-    // 2. Get list of images from the source bucket
-    const imageNames = await storage.listFiles(sourceBucket);
-    console.log(`Found ${imageNames.length} images to process.`);
+    // 2. Get list of images from the source bucket under website/
+    let imageNames = await storage.listFiles(sourceBucket);
+
+    // Skip duplicated content under website/website/
+    imageNames = imageNames.filter((name) => !name.startsWith('website/website/'));
+
+    console.log(`Found ${imageNames.length} images to process (after filtering duplicates).`);
 
     // 3. Process each image
     for (const imageName of imageNames) {

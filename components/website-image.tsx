@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useImages } from "@/context/image-context"
-
+import Image from "next/image"
 interface WebsiteImageProps {
   imageId: string
   alt: string
@@ -41,9 +41,10 @@ export function WebsiteImage({
   if (fill) {
     return (
       <div className={`relative w-full h-full overflow-hidden`}>
-        <img
+        <Image
           src={imageSrc}
           alt={alt}
+          fill
           loading={priority ? "eager" : "lazy"}
           decoding="async"
           className={`w-full h-full ${className}`}
@@ -54,11 +55,11 @@ export function WebsiteImage({
   }
 
   return (
-    <img
+    <Image
       src={imageSrc}
       alt={alt}
-      width={width}
-      height={height}
+      width={width ?? 700}
+      height={height ?? 490}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       className={className}
